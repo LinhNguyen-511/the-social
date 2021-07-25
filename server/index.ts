@@ -1,32 +1,37 @@
-// import express from 'express';
-
-// const app = express();
-
-// app.get('/', (req, res) => {
-//     res.send('Well done!');
-// })
-
-// app.listen(3000, () => {
-//     console.log('The application is listening on port 3000!');
-// })
-
 import express, { Application, Request, Response } from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import helmet from "helmet";
 
+import userRouter from  "./routes/users"
+import authRouter from  "./routes/auth"
+
+
+// ENVIRONMENT VARIABLES
+dotenv.config({ path: '../.env'})
+const MongoURL: string = process.env.MONGO_URL 
+
+// EXPRESS: create   
 const app: Application = express()
-const port = 3000
+const port = 4000
 
-// Body parsing Middleware
+//MONGOOSE
+mongoose.connect(MongoURL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}, () => {
+    console.log('Connected to Mongo')
+})
+
+// MIDDLEWARE
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+// set HTTPS headers
+app.use(helmet())
+// print out the res of req
+app.use(morgan("common"))
 
-app.get(
-    "/",
-    async (req: Request, res: Response): Promise<Response> => {
-        return res.status(200).send({
-            message: "Hello World!",
-        })
-    }
-)
+// ROUTES
+app.use('/api/users', userRouter)
+app.use('/api/auth', authRouter)
 
 try {
     app.listen(port, (): void => {

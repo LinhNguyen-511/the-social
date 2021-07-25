@@ -9,9 +9,6 @@ class Login extends Component {
     render() {
         return (
             <div className="page-wrapper">
-                <video autoPlay loop muted id="background">
-                    <source src="./../media/background.mp4" type="video/mp4" />
-                </video>
 
                 <div className="login card">
                     <h1>Login</h1>
