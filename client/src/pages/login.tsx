@@ -1,12 +1,11 @@
 // this page has an animated background and a login card 
 //with link to signup / recover password
 
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-//  import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-class Login extends Component {
-    render() {
+
+function Login() {
         return (
             <div className="page-wrapper">
 
@@ -52,7 +51,6 @@ class Login extends Component {
                 </div>
             </div>
         )
-    }
 }
 
 export default Login

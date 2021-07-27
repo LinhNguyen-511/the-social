@@ -1,0 +1,84 @@
+/* GLOBAL VARIABLES 
+$screen-s: 600px
+$screen-m: 768px
+$screen-l: 992px
+$screen-xl: 1200px
+
+/* CUSTOM STYLING 
+
+
+/* only apply row and col for elements with flex in EVERY screen size */
+.row
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    align-items: center
+
+
+.col 
+    display: flex
+    flex-direction: column
+    align-items: center
+
+
+.row-mid 
+    justify-content: center
+
+
+.row-end 
+    justify-content: end
+
+
+.row-between 
+    justify-content: space-between
+
+
+.row-around 
+    justify-content: space-around
+
+
+.col-mid 
+    justify-content: center
+
+
+.col-end 
+    justify-content: end
+
+
+.col-between 
+    justify-content: space-between
+
+
+.col-around 
+    justify-content: space-around
+
+
+
+/* COMMON STYLING 
+.page-wrapper 
+    min-width: 100vw
+    min-height: 100vh
+    padding: 0 
+    margin: 0
+    box-sizing: border-box
+
+
+/* RESPONSIVE 
+
+// Desktop 
+@media (min-width: $screen-m)   
+    .login.card
+        position: absolute
+        top: 30%
+        right: 20%
+        border-radius: 5%
+        box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px
+        padding: 20px
+        width: 20vw
+        z-index: 2
+
+    .login.fields > * 
+        margin-top: 20px
+    
+    
+    
