@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
+import cors from 'cors';
 
 import userRouter from  "./routes/users"
 import authRouter from  "./routes/auth"
@@ -22,6 +23,8 @@ mongoose.connect(MongoURL, {useNewUrlParser: true, useUnifiedTopology: true, use
 })
 
 // MIDDLEWARE
+// enable ALL cors request
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // set HTTPS headers

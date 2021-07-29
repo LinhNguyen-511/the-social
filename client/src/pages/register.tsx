@@ -1,11 +1,29 @@
 // this page has an animated background and a login card 
 //with link to signup / recover password
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+function Register() {
+    
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-function Login() {
+    // send inputs to backend 
+    const handleSubmit = () => {
+        const url = 'http://localhost:4000/api/auth/register'
+        let data = {
+            username: username,
+            email: email,
+            password: password
+        }
+        axios.post(url, data)
+        .then(response => console.log(response))
+        .catch(e => console.log(e))
+    }
+
         return (
             <div className="page-wrapper">
 
@@ -16,7 +34,12 @@ function Login() {
                         <div className="login fields col">
                             <div className="login field col">
                                 <label htmlFor="email">Email</label>
-                                <input type="email" name="email" id="email" />
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    value = {email} 
+                                    onChange = {e => setEmail(e.target.value)} />
                             </div>
 
                             <div className="login field col">
@@ -25,7 +48,8 @@ function Login() {
                                     type="text"
                                     name="username"
                                     id="username"
-                                />
+                                    value = {username} 
+                                    onChange = {e => setUsername(e.target.value)} />
                             </div>
 
                             <div className="login field col">
@@ -34,11 +58,13 @@ function Login() {
                                     type="password"
                                     name="password"
                                     id="password"
+                                    value = {password} 
+                                    onChange = {e => setPassword(e.target.value)}
                                 />
                             </div>
                         </div>
 
-                        <button type="button">Login</button>
+                        <button type="button" onClick = {handleSubmit}>Login</button>
                     </form>
 
                     <Link to="/account/recover">Forgot your password?</Link>
@@ -53,4 +79,4 @@ function Login() {
         )
 }
 
-export default Login
+export default Register 

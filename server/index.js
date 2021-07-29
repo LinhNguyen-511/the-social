@@ -8,6 +8,7 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var morgan_1 = __importDefault(require("morgan"));
 var helmet_1 = __importDefault(require("helmet"));
+var cors_1 = __importDefault(require("cors"));
 var users_1 = __importDefault(require("./routes/users"));
 var auth_1 = __importDefault(require("./routes/auth"));
 // ENVIRONMENT VARIABLES
@@ -21,6 +22,8 @@ mongoose_1.default.connect(MongoURL, { useNewUrlParser: true, useUnifiedTopology
     console.log('Connected to Mongo');
 });
 // MIDDLEWARE
+// enable ALL cors request
+app.use(cors_1.default());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // set HTTPS headers
