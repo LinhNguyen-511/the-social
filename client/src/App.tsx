@@ -3,6 +3,7 @@ import './App.sass';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 // import pages
+import Login from './pages/login'
 import Register from './pages/register'
 
 function App() {
@@ -11,6 +12,9 @@ function App() {
       <Router>
             <div>
                 <Switch>
+                    <Route path="/login">
+                        <Login />
+                    </Route>
                     <Route path="/register">
                         <Register />
                     </Route>

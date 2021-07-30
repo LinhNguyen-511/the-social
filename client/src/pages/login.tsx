@@ -5,45 +5,34 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-// TODO: add form validation
-function Register() {
+function Login() {
     
     const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     // send inputs to backend 
     const handleSubmit = () => {
-        const url = 'http://localhost:4000/api/auth/register'
+    
+        const url = 'http://localhost:4000/api/auth/login'
         let data = {
             username: username,
-            email: email,
             password: password
         }
         axios.post(url, data)
-        .then(response => console.log('Register: ' + response))
+        .then(response => console.log('Login: ' + response))
         .catch(e => console.log(e))
     }
 
         return (
             <div className="page-wrapper">
 
-                <div className="register card">
-                    <h1>Sign Up</h1>
+                <div className="login card">
+                    <h1>Login</h1>
 
-                    <form className="register form" action="" method="POST">
-                        <div className="register fields col">
-                            <div className="register field col">
-                                <label htmlFor="email">Email</label>
-                                <input 
-                                    type="email" 
-                                    name="email" 
-                                    id="email" 
-                                    value = {email} 
-                                    onChange = {e => setEmail(e.target.value)} />
-                            </div>
+                    <form className="login form" action="" method="POST">
+                        <div className="login fields col">
 
-                            <div className="register field col">
+                            <div className="login field col">
                                 <label htmlFor="username">Username</label>
                                 <input
                                     type="text"
@@ -53,7 +42,7 @@ function Register() {
                                     onChange = {e => setUsername(e.target.value)} />
                             </div>
 
-                            <div className="register field col">
+                            <div className="login field col">
                                 <label htmlFor="password">Password</label>
                                 <input
                                     type="password"
@@ -65,12 +54,19 @@ function Register() {
                             </div>
                         </div>
 
-                        <button type="button" onClick = {handleSubmit}>Sign Up</button>
+                        <button type="button" onClick = {handleSubmit}>Login</button>
                     </form>
 
+                    <Link to="/account/recover">Forgot your password?</Link>
+                    <p>
+                        Haven&apos;t got an account?
+                        <span>
+                            <Link to="/register">Sign up</Link>
+                        </span>
+                    </p>
                 </div>
             </div>
         )
 }
 
-export default Register 
+export default Login

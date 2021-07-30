@@ -39,16 +39,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// this file handles both signing in and signing up operations 
 var express_1 = __importDefault(require("express"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var User_1 = __importDefault(require("./../models/User"));
 var router = express_1.default.Router();
+// SIGN UP
 router.post('/register', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var salt, hashedPassword, user, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log('post register');
+                console.log('register');
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 5, , 6]);
@@ -71,6 +73,35 @@ router.post('/register', function (req, res) { return __awaiter(void 0, void 0, 
                 console.log(e_1);
                 return [3 /*break*/, 6];
             case 6: return [2 /*return*/];
+        }
+    });
+}); });
+// LOGIN 
+router.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, result, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log('login');
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, User_1.default.findOne({ username: req.body.username }).exec()];
+            case 2:
+                user = _a.sent();
+                console.log(user);
+                return [4 /*yield*/, bcrypt_1.default.compare(req.body.password, user.password)];
+            case 3:
+                result = _a.sent();
+                if (result) {
+                    return [2 /*return*/, user];
+                }
+                return [2 /*return*/];
+            case 4:
+                e_2 = _a.sent();
+                console.log(e_2);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
