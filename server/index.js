@@ -9,7 +9,7 @@ var dotenv_1 = __importDefault(require("dotenv"));
 var morgan_1 = __importDefault(require("morgan"));
 var helmet_1 = __importDefault(require("helmet"));
 var cors_1 = __importDefault(require("cors"));
-var users_1 = __importDefault(require("./routes/users"));
+var posts_1 = __importDefault(require("./routes/posts"));
 var auth_1 = __importDefault(require("./routes/auth"));
 // ENVIRONMENT VARIABLES
 dotenv_1.default.config({ path: '../.env' });
@@ -31,7 +31,7 @@ app.use(helmet_1.default());
 // print out the res of req
 app.use(morgan_1.default("common"));
 // ROUTES
-app.use('/api/users', users_1.default);
+app.use('/posts', posts_1.default);
 app.use('/api/auth', auth_1.default);
 try {
     app.listen(port, function () {

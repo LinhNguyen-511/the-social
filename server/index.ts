@@ -5,7 +5,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from 'cors';
 
-import userRouter from  "./routes/users"
+import userRouter from  "./routes/posts"
 import authRouter from  "./routes/auth"
 
 
@@ -33,8 +33,9 @@ app.use(helmet())
 app.use(morgan("common"))
 
 // ROUTES
-app.use('/api/users', userRouter)
+app.use('/posts', userRouter)
 app.use('/api/auth', authRouter)
+
 
 try {
     app.listen(port, (): void => {

@@ -19,7 +19,7 @@ function Login() {
             password: password
         }
         axios.post(url, data)
-        .then(response => console.log('Login: ' + response))
+        .then(Response => console.log('Login: ' + Response.data.accessToken))
         .catch(e => console.log(e))
     }
 

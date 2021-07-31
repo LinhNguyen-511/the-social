@@ -42,7 +42,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // this file handles both signing in and signing up operations 
 var express_1 = __importDefault(require("express"));
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var dotenv_1 = __importDefault(require("dotenv"));
 var User_1 = __importDefault(require("./../models/User"));
+// ENVIRONMENT VARIABLES
+dotenv_1.default.config({ path: '../.env' });
 var router = express_1.default.Router();
 // SIGN UP
 router.post('/register', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -78,7 +82,7 @@ router.post('/register', function (req, res) { return __awaiter(void 0, void 0, 
 }); });
 // LOGIN 
 router.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, result, e_2;
+    var user, accessToken, result, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -89,14 +93,18 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4 /*yield*/, User_1.default.findOne({ username: req.body.username }).exec()];
             case 2:
                 user = _a.sent();
-                console.log(user);
+                accessToken = jsonwebtoken_1.default.sign(user.toJSON(), process.env.SECRET_TOKEN);
                 return [4 /*yield*/, bcrypt_1.default.compare(req.body.password, user.password)];
             case 3:
                 result = _a.sent();
                 if (result) {
-                    return [2 /*return*/, user];
+                    console.log('Correct!');
+                    res.json({ accessToken: accessToken });
                 }
-                return [2 /*return*/];
+                else {
+                    res.send('Wrong credentials');
+                }
+                return [3 /*break*/, 5];
             case 4:
                 e_2 = _a.sent();
                 console.log(e_2);
