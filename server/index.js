@@ -11,6 +11,7 @@ var helmet_1 = __importDefault(require("helmet"));
 var cors_1 = __importDefault(require("cors"));
 var posts_1 = __importDefault(require("./routes/posts"));
 var auth_1 = __importDefault(require("./routes/auth"));
+var channels_1 = __importDefault(require("./routes/channels"));
 // ENVIRONMENT VARIABLES
 dotenv_1.default.config({ path: '../.env' });
 var MongoURL = process.env.MONGO_URL;
@@ -33,6 +34,7 @@ app.use(morgan_1.default("common"));
 // ROUTES
 app.use('/posts', posts_1.default);
 app.use('/api/auth', auth_1.default);
+app.use('/api/channels', channels_1.default);
 try {
     app.listen(port, function () {
         console.log("Connected successfully on port " + port);

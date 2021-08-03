@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = __importDefault(require("mongoose"));
-var Schema = mongoose_1.default.Schema;
-var userSchema = new Schema({
+var mongoose_1 = require("mongoose");
+// 2. Create a Schema corresponding to the document interface.
+var schema = new mongoose_1.Schema({
     // unique username 
     username: {
         type: String,
@@ -44,6 +41,6 @@ var userSchema = new Schema({
         defaut: false
     }
 });
-// create the model 
-var User = mongoose_1.default.model('User', userSchema);
-exports.default = User;
+// 3. Create a Model.
+var UserModel = mongoose_1.model('User', schema);
+exports.default = UserModel;

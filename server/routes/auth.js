@@ -48,6 +48,35 @@ var User_1 = __importDefault(require("./../models/User"));
 // ENVIRONMENT VARIABLES
 dotenv_1.default.config({ path: '../.env' });
 var router = express_1.default.Router();
+// this stores the refreshToken of many users
+var refreshTokens = [];
+router.post('/token', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var refreshToken;
+    return __generator(this, function (_a) {
+        refreshToken = req.body.refreshToken;
+        if (refreshToken == null)
+            return [2 /*return*/, res.sendStatus(401)];
+        if (!refreshTokens.includes(refreshToken))
+            return [2 /*return*/, res.sendStatus(403)];
+        jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN, function (err, user) {
+            if (err)
+                return res.sendStatus(403);
+            var accessToken = generateAccessToken({ name: user.username });
+            res.json({ accessToken: accessToken });
+        });
+        return [2 /*return*/];
+    });
+}); });
+// LOGOUT
+router.delete('/logout', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        // delete the refresh token of this user 
+        // TODO: user have to send their refreshToken to this route
+        refreshTokens = refreshTokens.filter(function (token) { return token !== req.body.token; });
+        res.sendStatus(204);
+        return [2 /*return*/];
+    });
+}); });
 // SIGN UP
 router.post('/register', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var salt, hashedPassword, user, e_1;
@@ -82,7 +111,7 @@ router.post('/register', function (req, res) { return __awaiter(void 0, void 0, 
 }); });
 // LOGIN 
 router.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, accessToken, result, e_2;
+    var user, accessToken, refreshToken, result, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -93,13 +122,16 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4 /*yield*/, User_1.default.findOne({ username: req.body.username }).exec()];
             case 2:
                 user = _a.sent();
-                accessToken = jsonwebtoken_1.default.sign(user.toJSON(), process.env.SECRET_TOKEN);
+                accessToken = generateAccessToken(user);
+                refreshToken = generateRefreshToken(user);
+                // TODO: store the refresh token -> should be in a database
+                refreshTokens.push(refreshToken);
                 return [4 /*yield*/, bcrypt_1.default.compare(req.body.password, user.password)];
             case 3:
                 result = _a.sent();
                 if (result) {
                     console.log('Correct!');
-                    res.json({ accessToken: accessToken });
+                    res.json({ accessToken: accessToken, refreshToken: refreshToken });
                 }
                 else {
                     res.send('Wrong credentials');
@@ -113,4 +145,10 @@ router.post('/login', function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
+function generateAccessToken(user) {
+    return jsonwebtoken_1.default.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: '30m' });
+}
+function generateRefreshToken(user) {
+    return jsonwebtoken_1.default.sign(user.toJSON(), process.env.REFRESH_TOKEN);
+}
 exports.default = router;

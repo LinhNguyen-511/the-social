@@ -7,7 +7,7 @@ import cors from 'cors';
 
 import userRouter from  "./routes/posts"
 import authRouter from  "./routes/auth"
-
+import channelRouter from "./routes/channels"
 
 // ENVIRONMENT VARIABLES
 dotenv.config({ path: '../.env'})
@@ -35,6 +35,7 @@ app.use(morgan("common"))
 // ROUTES
 app.use('/posts', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/channels', channelRouter)
 
 
 try {

@@ -1,8 +1,19 @@
-import mongoose from "mongoose"
+import { Schema, model } from 'mongoose';
 
-const { Schema } = mongoose
+// 1. Create an interface representing a document in MongoDB.
+interface User {
+    username: string
+    email: string
+    password: string
+    profilePicture?: string
+    followers: Array<User>
+    following: Array<User>
+    reputation: number
+    isAdmin: boolean
+}
 
-const userSchema = new Schema({
+// 2. Create a Schema corresponding to the document interface.
+const schema = new Schema<User>({
     // unique username 
     username: {
         type: String, 
@@ -42,7 +53,8 @@ const userSchema = new Schema({
     }
   });
 
-// create the model 
-const User = mongoose.model('User', userSchema)
 
-export default User;
+// 3. Create a Model.
+const UserModel = model<User>('User', schema);
+
+export default UserModel;

@@ -27,7 +27,10 @@ function authenticateToken(req, res, next) {
     if (token == null)
         return res.sendStatus(401);
     jsonwebtoken_1.default.verify(token, process.env.SECRET_TOKEN, function (err, user) {
-        // token sent but not valid
+        // The callback is called with the decoded payload 
+        // if the signature is valid and optional expiration, audience, or issuer are valid. 
+        // If not, it will be called with the error.
+        // So if token sent but not valid -> return a 'forbidden' status
         if (err)
             return res.sendStatus(403);
         req.body = user;
