@@ -1,5 +1,5 @@
 ### :new_moon: The social 
-#### Tech stack: Typescript, React, Node, MongoDB, Express
+#### 	:desktop_computer: Tech stack: Typescript, React, Node, MongoDB, Express
 Home to the cryptocurrency enthusiasts. Here, you can discuss and follow conversations about your favourite cryptocurrencies.
 
 ### :round_pushpin: Current feature 
